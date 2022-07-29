@@ -1,57 +1,122 @@
-# docker-dev-env-for-symfony
-(Cloned from @juanwilde github)
+# Tutorials, Friendship & Symfony6
 
-This repository contains the basic configuration for a complete local environment for Symfony projects
+Well hi there! This repository holds the code and script
+for the [Symfony6 Tutorials](https://symfonycasts.com/tracks/symfony) on SymfonyCasts.
 
-### Content:
-- NGINX 1.19 container to handle HTTP requests
-- PHP 8.1.1 container to host your Symfony application
-- MySQL 8.0 container to store databases
-- Postgres 14 container to store databases
+## Setup
 
-(feel free to update any version in `Dockerfiles` and ports in `docker-compose.yml`)
+If you've just downloaded the code, congratulations!!
 
-### Installation:
-- Run `make build` to create all containers
-- Run `make start` to initiate all the containers
-- Enter the PHP container with `make ssh-be`
-- Install your favourite Symfony version with `composer create-project symfony/skeleton project [version (e.g. 5.2.*)]`
-- Move the content to the root folder with `mv project/* . && mv project/.env .`. This is necessary since Composer won't install the project if the folder already contains data.
-- Copy the content from `project/.gitignore` and paste it in the root's folder `.gitignore`
-- Remove `project` folder (not needed anymore)
-- Navigate to `localhost:1000` so you can see the Symfony welcome page :)
+To get it working, follow these steps:
 
-### Alternatively may install:
-- Run `make build` to create all the containers
-- Run `make start` to initiate all the containers
-- Enter the PHP container with `make ssh-be`
-- Check the requirements with `symfony check:requirements`
-- Install your favourite Symfony version with `symfony new --dir=project --version=lts --no-git`
-  - the version options are: ('lts', 'stable', 'next' or 'previous'
-  - the project skeleton options are: ('--demo', '--full', '--webapp' or nothing by the minimum installation)
-- Move the content to the root folder with `mv project/* . && mv project/.env .`. This is necessary since Composer won't install the project if the folder already contains data.
-- Copy the content from `project/.gitignore` and paste it in the root's folder `.gitignore`
-- Remove `project` folder (not needed anymore)
-- Navigate to `localhost:1000` so you can see the Symfony welcome page :)
+**Download Composer dependencies**
 
+Make sure you have [Composer installed](https://getcomposer.org/download/)
+and then run:
 
-.env configuration by orm and rabbitmq
+```
+composer install
+```
 
-    ###> doctrine/doctrine-bundle ###
-    # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-    #DATABASE_URL="mysql://root:root@codenip-php81-symfony54-mysql:3306/mysql_symfony?serverVersion=8.0"
-    DATABASE_URL="postgresql://user:passwd@codenip-php81-symfony54-postgres:5432/postgres_symfony?serverVersion=14&charset=utf8"
-    ###< doctrine/doctrine-bundle ###
-    
-    ###> symfony/messenger ###
-    # Choose one of the transports below
-    # MESSENGER_TRANSPORT_DSN=doctrine://default
-    MESSENGER_TRANSPORT_DSN=amqp://guest:guest@docker-dev-env-for-symfony-rabbitmq:5672/%2f/messages
-    # MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
-    ###< symfony/messenger ###
+You may alternatively need to run `php composer.phar install`, depending
+on how you installed Composer.
 
-Happy coding!
+**Start the Symfony web server**
 
-### For testing
-- Insert phpunit testing with composer 'composer require --dev phpunit/phpunit symfony/test-pack'
-- Run `sf d:m:m -n --env=test` to apply migrations on test enviroment
+You can use Nginx or Apache, but Symfony's local web server
+works even better.
+
+To install the Symfony local web server, follow
+"Downloading the Symfony client" instructions found
+here: https://symfony.com/download - you only need to do this
+once on your system.
+
+Then, to start the web server, open a terminal, move into the
+project, and run:
+
+```
+symfony serve
+```
+
+(If this is your first time using this command, you may see an
+error that you need to run `symfony server:ca:install` first).
+
+Now check out the site at `https://localhost:8000`
+
+Have fun!
+
+**OPTIONAL: Webpack Encore Assets**
+
+This app uses Webpack Encore for the CSS, JS and image files.
+But, the built files are already included... so you don't need
+to download or build anything if you don't want to!
+
+But if you *do* want to play with the CSS/JS and build the
+final files, no problem. Make sure you have [yarn](https://yarnpkg.com/lang/en/)
+or `npm` installed (`npm` comes with Node) and then run:
+
+```
+yarn install
+yarn encore dev --watch
+
+# or
+npm install
+npm run watch
+```
+
+## Have Ideas, Feedback or an Issue?
+
+If you have suggestions or questions, please feel free to
+open an issue on this repository or comment on the course
+itself. We're watching both :).
+
+## SymfonyCasts Team Mix Tapes
+
+Want to listen to *our* mixtapes? 
+
+* Diego: https://tidal.com/browse/playlist/4b0dd1f6-c3d4-4886-8e31-c59455596528
+* Victor: https://tidal.com/browse/playlist/e2473e0d-e4df-407e-b12c-f40765d1dd4b
+* Danielle: https://tidal.com/browse/playlist/acd3fae7-10ea-43a4-be89-56a3f6f3040c
+* Ryan: https://tidal.com/browse/playlist/96d88543-e1bb-4457-b38a-3afd7d71d1da
+* Matias: https://tidal.com/browse/playlist/9f914493-5844-4fbc-8029-a828ee4d090d
+* Leanna: https://tidal.com/browse/playlist/fb01a86a-802e-4861-9a20-a0d37244b696
+* Vladimir: https://tidal.com/browse/playlist/0e78bb9e-a6ce-4548-9521-3e6779875978
+
+... or for countries where Tidal isn't available:
+https://open.spotify.com/user/31smny3k6o3kbqmmyzwebplayhda?si=8kq-n_8aRNOieXAOQJoleQ
+
+## Rock 'N' Roll Band
+
+If we were a rock 'n' roll band,
+We'd travel all over the land.
+We'd play and we'd sing and wear spangly things.
+If we were a rock 'n' roll band.
+If we were a rock 'n' roll band,
+And we were up there on the stand,
+The people would here us and love us and cheer us.
+Hurray for that rock 'n' roll band.
+If we were a rock 'n' roll band,
+Then we'd have a million fans.
+We'd giggle and laugh and sign autographs,
+If we were a rock 'n' roll band.
+If we were a rock 'n' roll band.
+The people would all kiss our hands.
+We'd be millionaires and have extra long hair,
+If we were a rock 'n' roll band.
+But we ain't no rock 'n' roll band,
+We're just seven kids in the sand.
+With homemade guitars and pails and jars
+And drums of potato chip cans.
+Just seven kids in the sand.
+Talk'n and waven' our hands.
+And dreamin' and thinkin' oh wouldn't it be grand,
+If we were a rock 'n' roll band.
+
+Shel Silverstein
+
+## Thanks!
+
+And as always, thanks so much for your support and letting
+us do what we love!
+
+<3 Your friends at SymfonyCasts
